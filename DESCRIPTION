@@ -1,0 +1,15 @@
+Package: Nonparam
+Type: Package
+Title: Non-parametric Test
+Version: 0.1.0
+Author: Yaodong Xin <yaodongx@umich.edu>
+Maintainer: Yaodong Xin <yaodongx@umich.edu>
+Description: Several non-parametric test methods including Chi-square test,
+  Wilcoxon test, McNemar Test, and Fisher exact test.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Import: bench
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.2.1
