@@ -10,6 +10,10 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Import: bench
-Suggests: knitr, rmarkdown
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 RoxygenNote: 7.2.1
+Config/testthat/edition: 3
