@@ -62,7 +62,7 @@ for(i in 1:10)
 y <- sample(10, 100, replace=TRUE) + 10
 for(i in 0:24){
   z <- matrix(y[(4 * i + 1): (4 * i + 4)], 2, 2)
-  all.equal(chisq.test(z)$p.value, chi.square.test(z)$pvalue)
+  all.equal(chisq.test(z, correct=FALSE)$p.value, chi.square.test(z)$pvalue)
 }
 ```
 
@@ -217,7 +217,8 @@ set.seed(123)
 x <- matrix(sample(10, 40, replace=TRUE), 4, 10) + 10
 for(i in 1:10){
   t <- matrix(x[, i], 2, 2)
-  all.equal(fisher.test(t)$p.value, fisher.exact.test(t)$pvalue)}
+  all.equal(fisher.test(t)$p.value, fisher.exact.test(t)$pvalue)
+  }
 ```
 
 This indicates that these two functions have the same results on the two tests mentioned above.

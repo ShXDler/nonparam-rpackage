@@ -40,7 +40,9 @@ fisher.exact.test <- function(x, alternative = 'two.sided'){
 
   twosidehyper <- function(A, m, n, k){
     plist <- dhyper(max(0, k-m): min(k, m), m, n, k)
-    return(sum(plist[plist <= plist[A + 1]]))
+    p <- dhyper(A, m, n, k)
+    if(p == max(plist)) return(1)
+    return(sum(plist[plist <= p]))
   }
   pvalue <- switch(alternative,
                    'two.sided' = twosidehyper(A, m, n, k),
