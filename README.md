@@ -1,5 +1,7 @@
 # Nonparam
 
+  [![R-CMD-check](https://github.com/ShXDler/nonparam-rpackage/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ShXDler/nonparam-rpackage/actions/workflows/R-CMD-check.yaml)
+
 ## Overview
 
 Nonparam is an R package for several common non-parametric test methods. Currently, the functions supported are listed as follows.
