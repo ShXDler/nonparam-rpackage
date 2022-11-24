@@ -11,8 +11,8 @@ test_that("multiplication works", {
                  unname(wilcoxon.test(x[, i], y[, i], paired=TRUE)$pvalue))
     expect_equal(wilcox.test(x[, i], y[, i], paired=TRUE, alternative='less')$p.value,
                  unname(wilcoxon.test(x[, i], y[, i], paired=TRUE, alternative='less')$pvalue))
-    expect_equal(wilcox.test(x[, i], y[, i], paired=TRUE, alternative='greater')$p.value,
-                 unname(wilcoxon.test(x[, i], y[, i], paired=TRUE, alternative='greater')$pvalue))
+    expect_equal(wilcox.test(x[, i], y[, i], paired=TRUE, exact=FALSE)$p.value,
+                 unname(wilcoxon.test(x[, i], y[, i], paired=TRUE, exact=FALSE)$pvalue))
     expect_equal(wilcox.test(x[, i] - y[, i])$p.value,
                  unname(wilcoxon.test(x[, i] - y[, i])$pvalue))
   }
@@ -21,5 +21,7 @@ test_that("multiplication works", {
   for(i in 1:5){
     expect_equal(wilcox.test(x[, i], y[1:5, i])$p.value,
                  unname(wilcoxon.test(x[, i], y[1:5, i])$pvalue))
+    expect_equal(wilcox.test(x[, i], y[1:5, i], exact=FALSE)$p.value,
+                 unname(wilcoxon.test(x[, i], y[1:5, i], exact=FALSE)$pvalue))
   }
 })
