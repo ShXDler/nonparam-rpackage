@@ -1,6 +1,6 @@
 # Nonparam
 
-  [![R-CMD-check](https://github.com/ShXDler/nonparam-rpackage/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ShXDler/nonparam-rpackage/actions/workflows/R-CMD-check.yaml)
+  [![R-CMD-check](https://github.com/ShXDler/nonparam-rpackage/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ShXDler/nonparam-rpackage/actions/workflows/R-CMD-check.yaml)[![Codecov test coverage](https://codecov.io/gh/ShXDler/nonparam-rpackage/branch/main/graph/badge.svg)](https://app.codecov.io/gh/ShXDler/nonparam-rpackage?branch=main)
 
 ## Overview
 
