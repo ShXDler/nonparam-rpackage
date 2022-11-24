@@ -26,7 +26,17 @@ fisher.exact.test <- function(x, alternative = c("two.sided", "less", "greater")
 \examples{
 # Fisher Exact Test
 
-x <- matrix(c(8, 7, 4, 9), 2, 2)
-fisher.exact.test(x)
+Convictions <- matrix(c(2, 10, 15, 3), nrow = 2,
+dimnames =
+ list(c("Dizygotic", "Monozygotic"),
+    c("Convicted", "Not convicted")))
+fisher.test(Convictions, alternative = "less")
+fisher.exact.test(Convictions, alternative = "less")
+
+fisher.test(Convictions, alternative = "greater")
+fisher.exact.test(Convictions, alternative = "greater")
+
+fisher.test(Convictions)
+fisher.exact.test(Convictions)
 
 }

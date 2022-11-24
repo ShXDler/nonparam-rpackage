@@ -23,14 +23,17 @@
 #'
 McNemar.test <- function(x, correct = TRUE) {
   data.name <- deparse(substitute(x))
+  if(!is.matrix(x))
+    x <- matrix(x, 2, 2)
   B <- x[1, 2]
   C <- x[2, 1]
   method <- "\tMcNemar's Chi-squared test"
+  correction <- 0
   if (correct & (B != C)) {
     correction <- 1
     method <- paste(method, "with continuity correction")
   }
-  chisq <- (abs(B - C) - correction) ^ 2 / (B + c)
+  chisq <- (abs(B - C) - correction) ^ 2 / (B + C)
   df <- 1
   pvalue <- 1 - pchisq(chisq, df)
 

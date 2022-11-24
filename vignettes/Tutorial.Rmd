@@ -1,0 +1,233 @@
+---
+title: "Tutorial"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tutorial}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(bench)
+```
+
+```{r setup}
+library(Nonparam)
+```
+
+`Nonparam` is a R package that could perform several common non-parametric tests. Currently, we are able to use `chi.square.test`, `wilcoxon.test`, `mcnemartest`, and `fisher.exact.test` . The usage is clarified as follows.
+
+# Chi-squared test
+
+## Usage
+
+Chi-squared test is one of the most widely used test methods, including goodness-of-fit tests and contingency table tests. For goodness-of-fit tests, we could use `chi.square.test` as follows.
+
+```{r}
+x <- c(12, 5, 7, 9, 8, 1)
+chi.square.test(x)
+```
+
+If we do not assign any probability for the tested vector, the function automatically tests if the probabilities of all the cells are equal. We could also assign probability to cells.
+
+```{r}
+x <- c(12, 5, 7, 9, 8, 1)
+chi.square.test(x, p=c(1/3, 1/6, 1/6, 1/12, 1/6, 1/12))
+```
+
+Also, we could use this function to perform contingency table tests, aka. Pearson's Chi-squared test.
+
+```{r}
+x <- matrix(c(19, 21, 25, 13), 2, 2)
+print(x)
+chi.square.test(x)
+```
+
+## Performance
+
+The original chi-squared test function provided by R base is `chisq.test`, with similar usage and effects. Here we compare these two functions.
+
+```{r}
+set.seed(123)
+# Goodness-of-fit test
+x <- matrix(sample(10, 100, replace=TRUE), 10, 10) + 10
+for(i in 1:10)
+  all.equal(chisq.test(x[, i])$p.value, chi.square.test(x[, i])$pvalue)
+
+# Pearson Chi-squared test
+y <- sample(10, 100, replace=TRUE) + 10
+for(i in 0:24){
+  z <- matrix(y[(4 * i + 1): (4 * i + 4)], 2, 2)
+  all.equal(chisq.test(z)$p.value, chi.square.test(z)$pvalue)
+}
+```
+
+This indicates that these two functions have the same results on the two tests mentioned above.
+
+```{r}
+x <- sample(10, 10, replace=TRUE) + 10
+bench::mark(
+  chisq.test(x)$p.value,
+  unname(chi.square.test(x)$pvalue)
+)
+```
+
+This indicates that our function has a relatively equal speed to that of R base function.
+
+# Wilcoxon Test
+
+## Usage
+
+Wilcoxon test is a non-parametric test method used either to test a the location of a population or test the difference between two populations. The former is also known as Wilcoxon rank sum test. And the unpaired two sample test is equivalent to Mann-Whitney-U test. The usage of the one-sample version is listed as follows.
+
+```{r}
+x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
+wilcoxon.test(x)
+```
+
+For sample size smaller than 50, we use exact p-value, to get approximated p-value using normal distribution, we could assign `exact` to `FALSE`. When using approximated p-value, a continuity correction is used when `correct=TRUE`. To change alternative hypothesis, we could choose from `'two.sided', 'less', 'greater'`. And the argument `mu` stands for the tested location parameter of the null hypothesis.
+
+```{r}
+x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
+wilcoxon.test(x, exact=FALSE, mu=1, alternative='greater')
+```
+
+There are typically two kinds of two-sample test, paired- and unpaired-sample test. For paired-sample test, we could assign `paired=TRUE`.
+
+```{r}
+x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
+y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
+wilcoxon.test(x, y, paired = TRUE)
+```
+
+Notice that this is equivalent to one-sample test of the difference between two paired samples.
+
+```{r}
+x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
+y <- c(0.878, 0.647, 0.598, 2.05, 1.06, 1.29, 1.06, 3.14, 1.29)
+wilcoxon.test(x - y)
+```
+
+For unpaired samples, we simply input two sample vectors.
+
+```{r}
+x <- c(1.83,  0.50,  1.62,  2.48, 1.68, 1.88, 1.55, 3.06, 1.30)
+y <- c(0.878, 0.647, 0.598, 2.05, 1.06)
+wilcoxon.test(x, y)
+```
+
+The optional arguments for two-sample test is similar to those of one-sample test.
+
+## Performance
+
+The original Wilcoxon test function provided by R base is `wilcox.test`, with similar usage and effects. Here we compare these two functions.
+
+```{r}
+set.seed(123)
+# One-sample test
+x <- matrix(rnorm(100), 10, 10)
+for(i in 1:10)
+  all.equal(wilcox.test(x[, i])$p.value, wilcoxon.test(x[, i])$pvalue)
+
+# Paired two-sample test
+y <- matrix(rnorm(100), 10, 10)
+for(i in 1:10){
+  all.equal(wilcox.test(x[, i], y[, i], paired=TRUE)$p.value, wilcoxon.test(x[, i], y[, i], paired=TRUE)$pvalue)
+  all.equal(wilcox.test(x[, i] - y[, i])$p.value, wilcoxon.test(x[, i] - y[, i])$pvalue)
+}
+
+# Two-sample test
+for(i in 1:10){
+  all.equal(wilcox.test(x[, i], y[1:5, i])$p.value, wilcoxon.test(x[, i], y[1:5, i])$pvalue)
+}
+```
+
+This indicates that these two functions have the same results on the tests mentioned above.
+
+```{r}
+x <- rnorm(100)
+bench::mark(
+  wilcox.test(x)$p.value,
+  unname(wilcoxon.test(x)$pvalue)
+)
+```
+
+This indicates that our function is a little bit slower than that of R base function.
+
+# McNemar Test
+
+## Usage
+
+McNemar test is tested on 2 $\times$ 2 contingency tables to determine whether the row and column marginal frequencies are equal. The usage is listed as follows.
+
+```{r}
+x <- matrix(c(794, 86, 150, 570), 2, 2)
+McNemar.test(x)
+```
+
+We can use the optional argument `correct` to determine whether to use continuity correction.
+
+## Performance
+
+The original McNemar test function provided by R base is `mcnemar.test`, with similar usage and effects. Here we compare these two functions.
+
+```{r}
+set.seed(123)
+x <- matrix(sample(10, 40, replace=TRUE), 4, 10) + 10
+for(i in 1:10){
+  t <- matrix(x[, i], 2, 2)
+  all.equal(mcnemar.test(t)$p.value, McNemar.test(t)$pvalue)}
+```
+
+This indicates that these two functions have the same results on the two tests mentioned above.
+
+```{r}
+x <- matrix(sample(10, 4) + 10, 2, 2)
+bench::mark(
+  mcnemar.test(x)$p.value,
+  unname(McNemar.test(x)$pvalue)
+)
+```
+
+This indicates that our function is slightly faster than that of R base function (probably because base function covers more circumstances).
+
+# Fisher Exact Test
+
+## Usage
+
+Fisher's exact test is a statistical significance test used in the analysis of contingency tables based on hypergeometric distribution.
+
+```{r}
+x <- matrix(c(8, 7, 4, 9), 2, 2)
+fisher.exact.test(x)
+```
+
+We could change test direction by changing argument `alternative` to `'two.sided', 'less', 'greater'`.
+
+## Performance
+
+The original Fisher exact test function provided by R base is `fisher.test`, with similar usage and effects. Here we compare these two functions.
+
+```{r}
+set.seed(123)
+x <- matrix(sample(10, 40, replace=TRUE), 4, 10) + 10
+for(i in 1:10){
+  t <- matrix(x[, i], 2, 2)
+  all.equal(fisher.test(t)$p.value, fisher.exact.test(t)$pvalue)}
+```
+
+This indicates that these two functions have the same results on the two tests mentioned above.
+
+```{r}
+x <- matrix(sample(10, 4) + 10, 2, 2)
+bench::mark(
+  fisher.test(x)$p.value,
+  unname(fisher.exact.test(x)$pvalue)
+)
+```
+
+This indicates that our function is slightly faster than that of R base function (probably because base function covers more circumstances).
