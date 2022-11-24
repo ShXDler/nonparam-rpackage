@@ -15,18 +15,9 @@
 #'@examples
 #'# Fisher Exact Test
 #'
-#'Convictions <- matrix(c(2, 10, 15, 3), nrow = 2,
-#'dimnames =
-#'  list(c("Dizygotic", "Monozygotic"),
-#'     c("Convicted", "Not convicted")))
-#'fisher.test(Convictions, alternative = "less")
-#'fisher.exact.test(Convictions, alternative = "less")
-#'
-#'fisher.test(Convictions, alternative = "greater")
-#'fisher.exact.test(Convictions, alternative = "greater")
-#'
-#'fisher.test(Convictions)
-#'fisher.exact.test(Convictions)
+#'x <- matrix(c(2, 10, 15, 3), 2, 2)
+#'fisher.exact.test(x)
+#'fisher.exact.test(x, alternative = "greater")
 #'
 #'@export
 #'
