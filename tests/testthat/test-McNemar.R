@@ -6,6 +6,6 @@ test_that("multiplication works", {
     expect_equal(mcnemar.test(t)$p.value,
                  unname(McNemar.test(t)$pvalue))
     expect_equal(mcnemar.test(t, correct=FALSE)$p.value,
-                 unname(McNemar.test(t, correct=FALSE)$pvalue))
+                 unname(McNemar.test(x[, i], correct=FALSE)$pvalue))
     }
 })
