@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("McNemar.test works", {
   set.seed(456)
   x <- matrix(sample(10, 80, replace=TRUE), 4, 20) + 10
   for(i in 1:20){

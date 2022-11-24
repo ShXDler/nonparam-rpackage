@@ -1,4 +1,4 @@
-test_that("multiplication works", {
+test_that("wilcoxon.test works", {
   set.seed(456)
   x <- matrix(rnorm(50), 10, 5)
   for(i in 1:5)
