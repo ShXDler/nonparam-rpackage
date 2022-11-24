@@ -2,7 +2,7 @@
 #'
 #'\code{wilcoxon.test} performs one and two-sample Wilcoxon tests on vectors of data.
 #'
-#'@usage wilcoxon.test <- function(x, y = NULL, alternative = c("two.sided", "less", "greater"),
+#'@usage wilcoxon.test(x, y = NULL, alternative = "two.sided",
 #'                       mu = 0, paired = FALSE, exact = NULL, correct = TRUE)
 #'
 #'@param x a numeric vector or matrix.

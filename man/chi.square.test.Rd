@@ -4,7 +4,7 @@
 \alias{chi.square.test}
 \title{chi.square.test}
 \usage{
-chisq.square.test(x, p = rep(1 / length(x), length(x)))
+chi.square.test(x, p = rep(1 / length(x), length(x)))
 }
 \arguments{
 \item{x}{a numeric vector or matrix.}

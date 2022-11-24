@@ -2,7 +2,7 @@
 #'
 #'\code{McNemar.test} performs McNemar's chi-squared test for 2\eqn{\times}2 table.
 #'
-#'@usage McNemar.test <- function(x, correct = TRUE)
+#'@usage McNemar.test(x, correct = TRUE)
 #'
 #'@param x a numeric vector or matrix.
 #'@param correct a logical indicating whether using continuity correction.

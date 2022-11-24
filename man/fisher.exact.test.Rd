@@ -4,7 +4,7 @@
 \alias{fisher.exact.test}
 \title{fisher.exact.test}
 \usage{
-fisher.exact.test <- function(x, alternative = c("two.sided", "less", "greater"))
+fisher.exact.test(x, alternative = "two.sided")
 }
 \arguments{
 \item{x}{a numeric vector or matrix.}

@@ -4,10 +4,12 @@
 \alias{print.nonparam}
 \title{print.nonparam}
 \usage{
-print.nonparam(x)
+\method{print}{nonparam}(x, ...)
 }
 \arguments{
 \item{x}{an object of class "\code{nonparam}"}
+
+\item{...}{further arguments to be passed to or from methods}
 }
 \value{
 the argument \code{x}, invisibly

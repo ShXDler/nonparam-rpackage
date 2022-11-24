@@ -2,7 +2,7 @@
 #'
 #'\code{chi.square.test} performs chi-squared goodness-of-fit tests on a vector and contingency table tests on a matrix.
 #'
-#'@usage chisq.square.test(x, p = rep(1 / length(x), length(x)))
+#'@usage chi.square.test(x, p = rep(1 / length(x), length(x)))
 #'
 #'@param x a numeric vector or matrix.
 #'@param p a vector of probabilities of the same length as x, only used when x is a vector.

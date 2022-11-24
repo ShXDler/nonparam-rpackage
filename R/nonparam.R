@@ -2,9 +2,8 @@
 #'
 #'\code{print.nonparam} prints objects of class "\code{nonparam}" used in this package.
 #'
-#'@usage print.nonparam(x)
-#'
 #'@param x an object of class "\code{nonparam}"
+#'@param ... further arguments to be passed to or from methods
 #'
 #'@returns the argument \code{x}, invisibly
 #'
@@ -14,7 +13,7 @@
 #'
 #'@export
 #'
-print.nonparam <- function(x){
+print.nonparam <- function(x, ...){
   cat(x$method, '\n\n')
   cat('data: ', x$data.name, '\n')
   out <- character(0)

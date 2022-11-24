@@ -2,7 +2,7 @@
 #'
 #'\code{fisher.exact.test} performs Fisher's exact test on 2\eqn{\times}2 contingency table.
 #'
-#'@usage fisher.exact.test <- function(x, alternative = c("two.sided", "less", "greater"))
+#'@usage fisher.exact.test(x, alternative = "two.sided")
 #'
 #'@param x a numeric vector or matrix.
 #'@param alternative a string specifying the alternative hypothesis.

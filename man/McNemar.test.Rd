@@ -4,7 +4,7 @@
 \alias{McNemar.test}
 \title{McNemar.test}
 \usage{
-McNemar.test <- function(x, correct = TRUE)
+McNemar.test(x, correct = TRUE)
 }
 \arguments{
 \item{x}{a numeric vector or matrix.}
